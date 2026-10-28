@@ -27,8 +27,7 @@ btnGenerate.addEventListener('click', async () => {
         const data = await response.json().catch(() => ({}));
         
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error?.message || "Erro HTTP " + response.status);
+            throw new Error(data.error || `Erro HTTP ${response.status}`);
         }
         
         responseDiv.textContent = data.suggestion;
