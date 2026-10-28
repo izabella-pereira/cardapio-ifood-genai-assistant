@@ -1,5 +1,3 @@
-const API_KEY = "AQ.Ab8RN6J_4eG-DuOL3sTe3to1-GaURa-VhWgJYdgorEvRe8Iptw"; 
-
 const btnGenerate = document.getElementById('btn-generate');
 const inputIngredients = document.getElementById('ingredients');
 const loadingDiv = document.getElementById('loading');
@@ -20,23 +18,21 @@ btnGenerate.addEventListener('click', async () => {
     try {
         const promptText = "Você é o assistente de Inteligência Artificial do iFood. O usuário disse que quer comer ou tem os seguintes ingredientes: '" + text + "'. Crie 3 sugestões de pratos criativos que ele poderia pedir no app do iFood baseados nisso. Seja simpático, use emojis e escreva de forma curta e apetitosa.";
 
-        const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-goog-api-key': API_KEY
-            },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: promptText }] }]
-            })
+        const response = await fetch("/api/suggestions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ingredients: text }),
         });
-
+        
+        const data = await response.json().catch(() => ({}));
+        
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error?.message || "Erro HTTP " + response.status);
         }
+        
+        responseDiv.textContent = data.suggestion;
+        resultSection.classList.remove("hidden");
 
         const data = await response.json();
         
