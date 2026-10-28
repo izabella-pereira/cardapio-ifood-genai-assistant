@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFood GenAI - Assistente de Cardápio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Logo ou Identidade simulada do iFood -->
+            <h1 class="logo">iFood <span>GenAI</span></h1>
+            <p>O que você quer comer hoje? Deixe nossa IA criar a combinação perfeita.</p>
+        </header>
+
+        <main>
+            <div class="input-container">
+                <label for="ingredients">Digite o que você está desejando ou os ingredientes que tem em mente:</label>
+                <input type="text" id="ingredients" placeholder="Ex: Hambúrguer artesanal, pizza fit, chocolate...">
+                <button id="btn-generate">Gerar Sugestões</button>
+            </div>
+
+            <div id="loading" class="hidden">Analisando sabores com IA... 🍕</div>
+
+            <section id="result" class="hidden">
+                <h2>✨ Sugestões da nossa IA:</h2>
+                <div id="ai-response"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Importando o SDK do Google Gemini para rodar direto no JS -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
