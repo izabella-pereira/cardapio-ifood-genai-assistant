@@ -45,7 +45,6 @@ module.exports = async function handler(req, res) {
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
             maxOutputTokens: 256,
-            thinkingConfig: { thinkingLevel: "MINIMAL" },
           },
         }),
         signal: AbortSignal.timeout(90000),
