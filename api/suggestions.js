@@ -44,7 +44,7 @@ module.exports = async function handler(req, res) {
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
         }),
-        signal: AbortSignal.timeout(90000),
+        signal: AbortSignal.timeout(120000),
       }
     );
 
