@@ -1,44 +1,70 @@
 # 🥑 iFood GenAI Assistant | Portfólio de Candidatura (Estágio)
 
-Este repositório contém um **Assistente Inteligente de Cardápios** desenvolvido para o ecossistema do iFood. O projeto combina tecnologias web modernas de front-end com inteligência artificial generativa, conectando-se diretamente à API do Google Gemini para resolver a indecisão dos usuários na hora de escolher uma refeição.
+Aplicação web de demonstração que ajuda a decidir o que pedir: a pessoa descreve o que está com vontade de comer ou informa ingredientes, e a inteligência artificial sugere pratos em português. O projeto foi desenvolvido como uma experiência inspirada no ecossistema do iFood e utiliza a Vercel para hospedar a interface e a função de API.
 
----
+## ✨ Funcionalidades
 
-## 🛠️ Tecnologias e Ferramentas
-* **Front-end:** HTML5, CSS3 (iFood UI/UX Design System Semântico) e JavaScript Assíncrono (ES6+)
-* **Inteligência Artificial:** Google GenAI SDK (`gemini-2.5-flash`)
-* **Conceitos Aplicados:** Engenharia de Prompt, Consumo de APIs REST, Manipulação de DOM e UX focada em conversão
+- Campo para informar desejos ou ingredientes.
+- Geração de sugestões de pratos com o Google Gemini.
+- Estado de carregamento e apresentação de mensagens de erro.
+- Chave da API mantida no servidor, em uma variável de ambiente, em vez de exposta no navegador.
+- Validação no servidor: texto obrigatório e limite de 300 caracteres.
 
----
+## 🧰 Tecnologias e versões
 
-## 💡 O Projeto: Assistente de Cardápio Inteligente
+| Tecnologia | Uso no projeto | Versão identificável |
+|---|---|---|
+| HTML | Estrutura da página | HTML5 (`<!DOCTYPE html>`); versão específica não fixada |
+| CSS | Estilos e layout responsivo | CSS3; versão específica não fixada |
+| JavaScript | Interação da interface, módulos e chamadas HTTP | ES modules, `async`/`await` e Fetch API; versão/target não configurado |
+| Node.js | Runtime da função serverless da Vercel | Não especificada no repositório |
+| Vercel | Hospedagem e execução da função `/api/suggestions` | Plataforma utilizada; versão/CLI não especificada |
+| Google Gemini API | Geração das sugestões por REST | API `v1beta`; modelo informado no código: `gemini-3.8-flash` |
 
-### • O Problema
-Um dos maiores desafios no ecossistema de delivery é o "paradoxo da escolha": usuários que passam longos minutos navegando pelo aplicativo do iFood sem saber o que pedir, gerando fadiga e abandono de carrinho.
+O projeto não inclui `package.json`, dependências npm ou configuração de versão do Node.js. Por isso, não há versões de pacotes ou do runtime que possam ser confirmadas pelo repositório. A chamada à Gemini usa `fetch` diretamente; o SDK Google GenAI não é utilizado.
 
-### • A Solução
-Uma aplicação web interativa que simula uma funcionalidade nativa do iFood. O usuário insere um desejo ou os ingredientes que possui em mente, e uma IA generativa atua como um *Sommelier de Delivery*, sugerindo 3 combinações de pratos altamente personalizadas e persuasivas em tempo real.
+## 🧠 Como funciona
 
-### • Engenharia de Prompt Aplicada
-A lógica no JavaScript utiliza um prompt de sistema estruturado para garantir que a IA mantenha o tom de voz da marca iFood:
-> *"Você é o assistente de Inteligência Artificial do iFood... Seja simpático, use emojis e escreva de forma curta e apetitosa."*
+1. A interface em `index.html` recebe o texto da pessoa.
+2. `js/script.js` envia o conteúdo em uma requisição `POST` para `/api/suggestions`.
+3. `api/suggestions.js` valida a entrada e chama a API Gemini usando a variável de ambiente `GEMINI_API_KEY`.
+4. A função retorna as sugestões à interface, que as exibe sem interpretar a resposta como HTML.
 
----
+## 📁 Estrutura do projeto
 
-## 📂 Arquitetura do Projeto
-* `index.html`: Estrutura semântica da aplicação.
-* `css/style.css`: Estilização e identidade visual baseada no ecossistema iFood.
-* `js/script.js`: Integração com o SDK do Gemini, controle de estados de Loading e requisições assíncronas.
+```text
+.
+├── api/
+│   └── suggestions.js  # Função serverless que consulta o Gemini
+├── css/
+│   └── style.css       # Estilos da aplicação
+├── js/
+│   └── script.js       # Interação e consumo da API
+└── index.html          # Página principal
+```
 
----
+## 🚀 Executar e publicar na Vercel
 
-## 📈 Próximos Passos de Evolução
-* Migrar a lógica da API Key para uma Serverless Function (Node.js) para garantir a segurança das credenciais em produção.
-* Adicionar suporte para filtros de restrições alimentares (Vegano, Sem Glúten, Zero Lactose).
-* Integrar com APIs mockadas de restaurantes para exibir pratos reais com base na sugestão da IA.
+1. Importe este repositório como um projeto na Vercel.
+2. Nas configurações do projeto, adicione a variável de ambiente `GEMINI_API_KEY` com uma chave válida do Google Gemini. Configure-a para os ambientes em que pretende executar a aplicação.
+3. Publique o projeto. A Vercel serve a página estática e disponibiliza `api/suggestions.js` como a rota `/api/suggestions`.
+4. Acesse o endereço publicado e informe o que deseja comer.
 
----
+Não configure a chave no JavaScript do navegador nem a envie ao repositório. Sem `GEMINI_API_KEY` no ambiente da função, as sugestões não poderão ser geradas.
 
-## ✉️ Contato e Links
-* **LinkedIn:** https://www.linkedin.com/in/izabellapsar/
-* **E-mail:** izabellapsarmento@hotmail.com
+## 🗺️ Contexto do projeto
+
+O projeto explora como IA generativa pode reduzir a indecisão na escolha de uma refeição. A interface recebe uma intenção simples — por exemplo, um prato desejado ou ingredientes disponíveis — e solicita à IA exatamente três sugestões curtas e apetitosas.
+
+**Conceitos aplicados:** consumo de API REST, funções serverless, variáveis de ambiente, validação de entrada, comunicação assíncrona e estados de carregamento/erro na interface.
+
+## 🔭 Sugestões de melhorias
+
+- **Aprimorar acessibilidade e interação:** permitir enviar com Enter, desabilitar o botão durante a geração e anunciar carregamento e resultados para leitores de tela.
+- **Personalizar as sugestões:** incluir filtros opcionais para preferências e restrições alimentares, como vegetariano, vegano ou sem lactose.
+- **Preparar para evolução:** adicionar testes para validação da API e estados da interface, além de limitar requisições para evitar uso abusivo do endpoint.
+
+## ✉️ Contato
+
+- **LinkedIn:** [Izabella Pereira Sarmento](https://www.linkedin.com/in/izabellapsar/)
+- **E-mail:** [izabellapsarmento@hotmail.com](mailto:izabellapsarmento@hotmail.com)
