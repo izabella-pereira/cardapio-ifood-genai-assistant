@@ -33,14 +33,13 @@ btnGenerate.addEventListener('click', async () => {
         responseDiv.textContent = data.suggestion;
         resultSection.classList.remove("hidden");
         
-        // Mapeamento preciso do JSON oficial do Gemini 2.5
-        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-            const generatedText = data.candidates[0].content.parts[0].text;
-            responseDiv.innerText = generatedText;
-            resultSection.classList.remove('hidden');
-        } else {
-            throw new Error("A IA respondeu, mas a estrutura veio vazia ou diferente.");
+        // Mapeamento preciso do JSON oficial do Gemini 3.8
+        if (typeof data.suggestion !== "string" || !data.suggestion.trim()) {
+          throw new Error("O servidor não retornou sugestões.");
         }
+        
+        responseDiv.textContent = data.suggestion.trim();
+        resultSection.classList.remove("hidden");
 
     } catch (error) {
         console.error("Erro capturado no sistema:", error);
