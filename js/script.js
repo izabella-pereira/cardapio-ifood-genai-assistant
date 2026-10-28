@@ -20,10 +20,10 @@ btnGenerate.addEventListener('click', async () => {
     try {
         const promptText = `Você é o assistente de Inteligência Artificial do iFood. O usuário disse que quer comer ou tem os seguintes ingredientes: "${text}". Crie 3 sugestões de pratos criativos que ele poderia pedir no app do iFood baseados nisso. Seja simpático, use emojis e escreva de forma curta e apetitosa.`;
 
-        // URL Oficial e Direta corrigida passo a passo (sem misturar com chaves soltas)
+        // URL Oficial Completa com o subdomínio generativelanguage e a rota do modelo
         const url = `https://googleapis.com/${API_KEY}`;
 
-        // Fazendo a chamada HTTP POST diretamente para o endpoint correto do Google
+        // Fazendo a chamada HTTP POST direta para o endpoint correto
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -43,18 +43,18 @@ btnGenerate.addEventListener('click', async () => {
 
         const data = await response.json();
         
-        // Mapeamento preciso do objeto JSON retornado pelo Gemini 2.5
+        // Mapeamento preciso para extrair o texto do Gemini 2.5
         if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
             const generatedText = data.candidates[0].content.parts[0].text;
             responseDiv.innerText = generatedText;
             resultSection.classList.remove('hidden');
         } else {
-            throw new Error("A estrutura da resposta da IA veio em um formato inesperado.");
+            throw new Error("A IA respondeu, mas a estrutura veio em um formato inesperado.");
         }
 
     } catch (error) {
         console.error("Erro capturado no sistema:", error);
-        responseDiv.innerText = `Ops! Ocorreu um erro ao conectar com a IA.\n\nDetalhes: ${error.message}\n\nVerifique se o código do script.js salvou corretamente.`;
+        responseDiv.innerText = `Ops! Ocorreu um erro ao conectar com a IA.\n\nDetalhes: ${error.message}\n\nVerifique se o endpoint e a chave estão corretos.`;
         resultSection.classList.remove('hidden');
     } finally {
         loadingDiv.classList.add('hidden');
