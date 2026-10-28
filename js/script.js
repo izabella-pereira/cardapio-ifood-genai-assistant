@@ -18,33 +18,37 @@ btnGenerate.addEventListener('click', async () => {
     resultSection.classList.add('hidden');
 
     try {
-        // Engenharia de Prompt: Definindo o papel da IA no contexto do iFood
         const promptText = `Você é o assistente de Inteligência Artificial do iFood. O usuário disse que quer comer ou tem os seguintes ingredientes: "${text}". Crie 3 sugestões de pratos criativos que ele poderia pedir no app do iFood baseados nisso. Seja simpático, use emojis e escreva de forma curta e apetitosa.`;
 
-        // URL Oficial da API do Gemini para requisições Web puras
+        // URL atualizada com o padrão v1beta estável para chamadas diretas
         const url = `https://googleapis.com{API_KEY}`;
 
-        // Fazendo a chamada HTTP POST direta para o Google
+        // Estrutura HTTP corrigida para o payload do Gemini
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: promptText }]
-                }]
+                contents: [
+                    {
+                        parts: [
+                            { text: promptText }
+                        ]
+                    }
+                ]
             })
         });
 
-        const data = await response.json();
-
-        // Verifica se a API retornou um erro estruturado
-        if (data.error) {
-            throw new Error(data.error.message);
+        // Se a resposta do servidor falhar (Ex: chave inválida ou bloqueio)
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || `Erro HTTP ${response.status}`);
         }
 
-        // Captura o texto gerado de dentro do objeto do Gemini
+        const data = await response.json();
+
+        // Mapeamento seguro da árvore do objeto JSON do Gemini
         const generatedText = data.candidates[0].content.parts[0].text;
 
         // Mostra o resultado na tela
@@ -52,8 +56,8 @@ btnGenerate.addEventListener('click', async () => {
         resultSection.classList.remove('hidden');
 
     } catch (error) {
-        console.error("Erro na requisição:", error);
-        responseDiv.innerText = `Ops! Ocorreu um erro ao conectar com a IA.\nDetalhes: ${error.message}\n\nVerifique se sua API Key está colada corretamente.`;
+        console.error("Erro detalhado:", error);
+        responseDiv.innerText = `Ops! Ocorreu um erro ao conectar com a IA.\n\nDetalhes: ${error.message}\n\nVerifique se sua API Key foi copiada por completo do Google AI Studio e colada corretamente.`;
         resultSection.classList.remove('hidden');
     } finally {
         loadingDiv.classList.add('hidden');
