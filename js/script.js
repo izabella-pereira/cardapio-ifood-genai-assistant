@@ -21,7 +21,7 @@ btnGenerate.addEventListener('click', async () => {
         const promptText = `Você é o assistente de Inteligência Artificial do iFood. O usuário disse que quer comer ou tem os seguintes ingredientes: "${text}". Crie 3 sugestões de pratos criativos que ele poderia pedir no app do iFood baseados nisso. Seja simpático, use emojis e escreva de forma curta e apetitosa.`;
 
         // URL Oficial e Direta corrigida passo a passo (sem misturar com chaves soltas)
-        const url = `https://googleapis.com${API_KEY}`;
+        const url = `https://googleapis.com/${API_KEY}`;
 
         // Fazendo a chamada HTTP POST diretamente para o endpoint correto do Google
         const response = await fetch(url, {
