@@ -55,7 +55,11 @@ module.exports = async function handler(req, res) {
     const result = await upstream.json().catch(() => null);
 
     if (!upstream.ok) {
-      console.error("Gemini API respondeu com status:", upstream.status);
+      console.error("Erro do Gemini:", {
+        status: upstream.status,
+        message: result?.error?.message,
+        details: result?.error?.details,
+      });
       return res.status(502).json({ error: "Não foi possível gerar sugestões agora." });
     }
 
