@@ -42,10 +42,13 @@ btnGenerate.addEventListener('click', async () => {
         resultSection.classList.remove("hidden");
 
     } catch (error) {
-        console.error("Erro capturado no sistema:", error);
-        responseDiv.innerText = "Ops! Ocorreu um erro ao conectar com a IA.\n\nDetalhes: " + error.message;
-        resultSection.classList.remove('hidden');
+      console.error("Erro capturado no sistema:", error);
+      responseDiv.textContent =
+        error instanceof Error
+          ? error.message
+          : "Não foi possível gerar sugestões. Tente novamente.";
+      resultSection.classList.remove("hidden");
     } finally {
-        loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
     }
 });
