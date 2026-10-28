@@ -20,19 +20,16 @@ btnGenerate.addEventListener('click', async () => {
     try {
         const promptText = "Você é o assistente de Inteligência Artificial do iFood. O usuário disse que quer comer ou tem os seguintes ingredientes: '" + text + "'. Crie 3 sugestões de pratos criativos que ele poderia pedir no app do iFood baseados nisso. Seja simpático, use emojis e escreva de forma curta e apetitosa.";
 
-        // URL montada por concatenação simples para evitar qualquer erro de digitação com template strings
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
-        // Fazendo a chamada HTTP POST
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-goog-api-key': API_KEY
             },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: promptText }]
-                }]
+                contents: [{ parts: [{ text: promptText }] }]
             })
         });
 
