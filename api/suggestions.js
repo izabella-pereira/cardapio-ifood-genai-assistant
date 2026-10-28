@@ -25,7 +25,9 @@ module.exports = async function handler(req, res) {
     console.error("GEMINI_API_KEY não está configurada.");
     return res.status(500).json({ error: "A configuração do servidor está incompleta." });
   }
-
+  
+  const startedAt = Date.now();
+  
   try {
     const prompt = [
       "Sugira exatamente 3 pratos criativos para pedir no iFood.",
@@ -55,9 +57,15 @@ module.exports = async function handler(req, res) {
         status: upstream.status,
         message: result?.error?.message,
         details: result?.error?.details,
+        durationMs: Date.now() - startedAt,
       });
       return res.status(502).json({ error: "Não foi possível gerar sugestões agora." });
     }
+
+    console.info("Gemini concluído", {
+      status: upstream.status,
+      durationMs: Date.now() - startedAt,
+    });
 
     const suggestion = result?.candidates?.[0]?.content?.parts
       ?.map((part) => part.text || "")
@@ -67,13 +75,14 @@ module.exports = async function handler(req, res) {
     if (!suggestion) {
       return res.status(502).json({ error: "O Gemini não retornou sugestões." });
     }
-
+    
     return res.status(200).json({ suggestion });
   } catch (error) {
     const timedOut = error?.name === "TimeoutError" || error?.name === "AbortError";
   
     console.error("Falha na chamada ao Gemini:", {
       name: error?.name,
+      durationMs: Date.now() - startedAt,
     });
   
     return res.status(timedOut ? 504 : 502).json({
