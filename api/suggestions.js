@@ -70,8 +70,16 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ suggestion });
   } catch (error) {
-    console.error("Falha na chamada ao Gemini:", error.name);
-    const status = error.name === "TimeoutError" ? 504 : 502;
-    return res.status(status).json({ error: "O serviço de sugestões está indisponível." });
+    const timedOut = error?.name === "TimeoutError" || error?.name === "AbortError";
+  
+    console.error("Falha na chamada ao Gemini:", {
+      name: error?.name,
+    });
+  
+    return res.status(timedOut ? 504 : 502).json({
+      error: timedOut
+        ? "O Gemini demorou mais que o esperado. Clique em Gerar novamente para tentar."
+        : "Não foi possível gerar sugestões agora. Tente novamente.",
+    });
   }
 };
