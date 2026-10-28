@@ -43,8 +43,12 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            maxOutputTokens: 256,
+            thinkingConfig: { thinkingLevel: "MINIMAL" },
+          },
         }),
-        signal: AbortSignal.timeout(60000),
+        signal: AbortSignal.timeout(90000),
       }
     );
 
