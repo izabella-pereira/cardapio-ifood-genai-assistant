@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f7f7f7;
+    color: #3e3e3e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffff;
+    max-width: 600px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    color: #ea1d2c; /* Vermelho iFood */
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #a4a4a4;
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+p {
+    color: #717171;
+    margin-top: 5px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus {
+    border-color: #ea1d2c;
+}
+
+button {
+    background-color: #ea1d2c;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #c7121f;
+}
+
+#loading {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #ea1d2c;
+}
+
+#result {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#result h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#ai-response {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.6;
+    white-space: pre-line; /* Mantém as quebras de linha da IA */
+}
+
+.hidden {
+    display: none;
+}
