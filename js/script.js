@@ -1,4 +1,4 @@
-const API_KEY = "AQ.Ab8RN6KmqNqQ8IOxrCeDkgopXor2tzi83hVHs1F_rTR-9MsllQ"; 
+const API_KEY = "AQ.Ab8RN6J_4eG-DuOL3sTe3to1-GaURa-VhWgJYdgorEvRe8Iptw"; 
 
 const btnGenerate = document.getElementById('btn-generate');
 const inputIngredients = document.getElementById('ingredients');
