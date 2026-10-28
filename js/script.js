@@ -33,8 +33,6 @@ btnGenerate.addEventListener('click', async () => {
         
         responseDiv.textContent = data.suggestion;
         resultSection.classList.remove("hidden");
-
-        const data = await response.json();
         
         // Mapeamento preciso do JSON oficial do Gemini 2.5
         if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
